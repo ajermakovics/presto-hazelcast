@@ -4,7 +4,7 @@ presto-hazelcast
 
 [PrestoDb](http://prestodb.io/) connector for [Hazelcast](http://hazelcast.org/).
 
-This is an experiment in using PrestoDb to run SQL queries on top of Hazelcast. It starts an embedded Hazelcast instance with an IMap and some example data. The connector is used to query maps as if they were tables. Objects in maps are treated as rows.
+This is an experiment in using PrestoDb to run SQL queries on top of Hazelcast. It starts a PrestoDb server and an embedded Hazelcast instance. The connector is used to query maps as if they were tables. Objects in maps are treated as rows.
 
 Usage
 ================
@@ -22,9 +22,31 @@ Usage
  - `SHOW TABLES;` 
  - `SELECT active, SUM(sales) FROM employees GROUP BY active;`
 
+The server comes with some example data in table *emplyees*.
+You can connect to the embedded Hazelcast instance (port 5701) using a client and put some more data in.
 
 Config
 ================
 
 Config is in src/main/resources
 
+
+Run from IDE
+============
+
+Main class: main.HazelcastPresto  
+Wroking dir: src/main/resources  
+JVM Args: -ea -Xmx1G -Dconfig=config.properties -Dlog.levels-file=log.properties  
+
+The code for the connector itself is in the *plugin* package.
+
+TODOs
+=====
+
+Lots of things to improve:
+ - use map key as an id
+ - make distributed and partiton aware
+ - result paging
+ - make configurable
+ - ...
+ 
