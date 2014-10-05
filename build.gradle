@@ -1,0 +1,35 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.hazelcast:hazelcast-all:3.3.1'
+
+    compile 'com.facebook.presto:presto-server:0.76'
+    compile 'com.facebook.presto:presto-example-http:0.76'
+    compile 'com.facebook.presto:presto-tpch:0.76'
+    compile 'com.facebook.presto:presto-spi:0.76'
+    compile 'com.facebook.presto:presto-example-http:0.76'
+    compile ('com.facebook.presto:presto-main:0.76') {
+    	exclude module: 'asm'
+    }
+    
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Presto-Hazelcast', 'Implementation-Version': version
+    }
+}
+
+
+
