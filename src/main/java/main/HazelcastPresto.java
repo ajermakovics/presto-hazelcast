@@ -3,7 +3,6 @@ package main;
 import main.data.Employee;
 import plugin.HazelcastPlugin;
 
-import com.facebook.presto.example.ExamplePlugin;
 import com.facebook.presto.server.PluginManager;
 import com.facebook.presto.server.PrestoServer;
 import com.google.common.collect.ImmutableList;
@@ -46,7 +45,7 @@ public class HazelcastPresto extends PrestoServer implements Module, InjectionLi
 
     @Override
     public void afterInjection(PluginManager pm) {
-    	pm.installPlugin(new ExamplePlugin());
+    	//pm.installPlugin(new ExamplePlugin());
     	pm.installPlugin(new HazelcastPlugin());
     }
 

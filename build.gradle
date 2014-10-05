@@ -13,14 +13,12 @@ repositories {
 dependencies {
     compile 'com.hazelcast:hazelcast-all:3.3.1'
 
-    compile 'com.facebook.presto:presto-server:0.76'
-    compile 'com.facebook.presto:presto-example-http:0.76'
-    compile 'com.facebook.presto:presto-tpch:0.76'
     compile 'com.facebook.presto:presto-spi:0.76'
-    compile 'com.facebook.presto:presto-example-http:0.76'
+    //compile 'com.facebook.presto:presto-example-http:0.76'
     compile ('com.facebook.presto:presto-main:0.76') {
     	exclude module: 'asm'
     }
+    compile 'com.facebook.presto:presto-server:0.76'
     
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
@@ -31,5 +29,13 @@ jar {
     }
 }
 
-
+task runServer(dependsOn: 'classes', type: JavaExec) {
+	main = 'main.HazelcastPresto'
+	classpath = sourceSets.main.runtimeClasspath
+	args '-ea'
+//	maxHeapSize '1G'
+	workingDir 'src/main/resources'
+	systemProperty 'config', 'config.properties'
+	systemProperty 'log.levels-file', 'log.properties'
+}
 
