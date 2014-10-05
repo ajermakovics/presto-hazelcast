@@ -16,4 +16,5 @@ hs_err_pid*
 /bin/
 .gradle
 /build/
+src/main/resources/var/log
 
