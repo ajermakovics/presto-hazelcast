@@ -4,7 +4,9 @@ presto-hazelcast
 
 [PrestoDb](http://prestodb.io/) connector for [Hazelcast](http://hazelcast.org/).
 
-This is an experiment in using PrestoDb to run SQL queries on top of Hazelcast. It starts a PrestoDb server and an embedded Hazelcast instance. The connector is used to query maps as if they were tables. Objects in maps are treated as rows.
+Presto is an open source distributed SQL query engine for running interactive analytic queries against data sources of all sizes ranging from gigabytes to petabytes. 
+
+This is an **experiment** in using PrestoDb to run SQL queries on top of Hazelcast. It starts a PrestoDb server and an embedded Hazelcast instance. The connector is used to query maps as if they were tables. Objects in maps are treated as rows.
 
 Usage
 ================
