@@ -2,8 +2,8 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 version = '1.0'
 
@@ -12,14 +12,17 @@ repositories {
 }
 
 dependencies {
-    compile 'com.hazelcast:hazelcast-all:3.3.1'
+    compile 'com.hazelcast:hazelcast-all:3.4.2'
 
-    compile 'com.facebook.presto:presto-spi:0.76'
-    //compile 'com.facebook.presto:presto-example-http:0.76'
-    compile ('com.facebook.presto:presto-main:0.76') {
+    compile 'com.facebook.presto:presto-spi:0.107'
+    compile 'com.facebook.presto:presto-example-http:0.107'
+    compile ('com.facebook.presto:presto-main:0.107') {
     	exclude module: 'asm'
     }
-    compile 'com.facebook.presto:presto-server:0.76'
+    compile 'com.facebook.presto:presto-parser:0.107'
+    compile 'com.facebook.presto:presto-client:0.107'
+    
+    compile 'io.airlift:slice:0.14'
     
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
