@@ -17,7 +17,7 @@ Usage
  
 2. Download presto [client](http://prestodb.io/docs/current/installation/cli.html) and run it using:
 
- - `./presto --server localhost:8383 --catalog hazelcast -schema maps` 
+ - `./presto --server localhost:8383 --catalog hazelcast --schema maps` 
 
 3. Run some SQL queries
 
