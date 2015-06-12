@@ -23,6 +23,8 @@ Usage
 
  - `SHOW TABLES;` 
  - `SELECT active, SUM(sales) FROM employees GROUP BY active;`
+ - Joins:
+ - `SELECT departments.name, SUM(sales) FROM departments INNER JOIN employees ON id = department GROUP BY departments.name;`
 
 The server comes with some example data in table *emplyees*.
 You can connect to the embedded Hazelcast instance (port 5701) using a client and put some more data in.
