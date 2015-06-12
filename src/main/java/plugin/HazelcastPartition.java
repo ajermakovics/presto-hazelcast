@@ -1,10 +1,11 @@
 package plugin;
 
-import com.facebook.presto.spi.ConnectorColumnHandle;
+import com.facebook.presto.spi.ColumnHandle;
 import com.facebook.presto.spi.ConnectorPartition;
 import com.facebook.presto.spi.ConnectorTableHandle;
 import com.facebook.presto.spi.TupleDomain;
 
+@Deprecated
 public class HazelcastPartition implements ConnectorPartition {
 
 	private ConnectorTableHandle table;
@@ -19,7 +20,7 @@ public class HazelcastPartition implements ConnectorPartition {
 	}
 
 	@Override
-	public TupleDomain<ConnectorColumnHandle> getTupleDomain() {
+	public TupleDomain<ColumnHandle> getTupleDomain() {
 		return TupleDomain.all();
 	}
 

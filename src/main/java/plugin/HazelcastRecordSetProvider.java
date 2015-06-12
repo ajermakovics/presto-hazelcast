@@ -1,12 +1,13 @@
 package plugin;
 
+import com.hazelcast.core.HazelcastInstance;
+
 import java.util.List;
 
-import com.facebook.presto.spi.ConnectorColumnHandle;
+import com.facebook.presto.spi.ColumnHandle;
 import com.facebook.presto.spi.ConnectorRecordSetProvider;
 import com.facebook.presto.spi.ConnectorSplit;
 import com.facebook.presto.spi.RecordSet;
-import com.hazelcast.core.HazelcastInstance;
 
 public class HazelcastRecordSetProvider implements ConnectorRecordSetProvider {
 
@@ -19,7 +20,7 @@ public class HazelcastRecordSetProvider implements ConnectorRecordSetProvider {
 	}
 
 	@Override
-	public RecordSet getRecordSet(ConnectorSplit split, List<? extends ConnectorColumnHandle> columns) {
+	public RecordSet getRecordSet(ConnectorSplit split, List<? extends ColumnHandle> columns) {
 		return new HazelcastRecordSet(split, columns, hz);
 	}
 }

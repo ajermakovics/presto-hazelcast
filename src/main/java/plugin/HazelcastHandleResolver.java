@@ -1,6 +1,9 @@
 package plugin;
 
-import com.facebook.presto.spi.*;
+import com.facebook.presto.spi.ColumnHandle;
+import com.facebook.presto.spi.ConnectorHandleResolver;
+import com.facebook.presto.spi.ConnectorSplit;
+import com.facebook.presto.spi.ConnectorTableHandle;
 
 public class HazelcastHandleResolver implements ConnectorHandleResolver {
 
@@ -16,7 +19,7 @@ public class HazelcastHandleResolver implements ConnectorHandleResolver {
 	}
 
 	@Override
-	public boolean canHandle(ConnectorColumnHandle col) {
+	public boolean canHandle(ColumnHandle col) {
 		return col instanceof HazelcastColumnHandle && ((HazelcastColumnHandle)col).getConnectorId().equals(connectorId)  ;
 	}
 
@@ -26,48 +29,18 @@ public class HazelcastHandleResolver implements ConnectorHandleResolver {
 	}
 
 	@Override
-	public boolean canHandle(ConnectorIndexHandle indexHandle) {
-		return false;
-	}
-
-	@Override
-	public boolean canHandle(ConnectorOutputTableHandle tableHandle) {
-		return false;
-	}
-
-	@Override
-	public boolean canHandle(ConnectorInsertTableHandle tableHandle) {
-		return false;
-	}
-
-	@Override
 	public Class<? extends ConnectorTableHandle> getTableHandleClass() {
 		return HazelcastTableHandle.class;
 	}
 
 	@Override
-	public Class<? extends ConnectorColumnHandle> getColumnHandleClass() {
+	public Class<? extends ColumnHandle> getColumnHandleClass() {
 		return HazelcastColumnHandle.class;
 	}
 
 	@Override
 	public Class<? extends ConnectorSplit> getSplitClass() {
 		return HazelcastSplit.class;
-	}
-
-	@Override
-	public Class<? extends ConnectorIndexHandle> getIndexHandleClass() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Class<? extends ConnectorOutputTableHandle> getOutputTableHandleClass() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Class<? extends ConnectorInsertTableHandle> getInsertTableHandleClass() {
-		throw new UnsupportedOperationException();
 	}
 
 }

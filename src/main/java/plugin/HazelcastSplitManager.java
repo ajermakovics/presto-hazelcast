@@ -3,7 +3,15 @@ package plugin;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.facebook.presto.spi.*;
+import com.facebook.presto.spi.ColumnHandle;
+import com.facebook.presto.spi.ConnectorPartition;
+import com.facebook.presto.spi.ConnectorPartitionResult;
+import com.facebook.presto.spi.ConnectorSplit;
+import com.facebook.presto.spi.ConnectorSplitManager;
+import com.facebook.presto.spi.ConnectorSplitSource;
+import com.facebook.presto.spi.ConnectorTableHandle;
+import com.facebook.presto.spi.FixedSplitSource;
+import com.facebook.presto.spi.TupleDomain;
 import com.facebook.presto.util.Types;
 
 public class HazelcastSplitManager implements ConnectorSplitManager {
@@ -16,7 +24,7 @@ public class HazelcastSplitManager implements ConnectorSplitManager {
 
 	@Override
 	public ConnectorPartitionResult getPartitions(ConnectorTableHandle table,
-			TupleDomain<ConnectorColumnHandle> tupleDomain) {
+			TupleDomain<ColumnHandle> tupleDomain) {
 
 		List<ConnectorPartition> partitions = new ArrayList<>();
 		// pretending we have single partition for now

@@ -1,9 +1,14 @@
 package plugin;
 
+import com.hazelcast.core.HazelcastInstance;
+
 import java.util.Map;
 
-import com.facebook.presto.spi.*;
-import com.hazelcast.core.HazelcastInstance;
+import com.facebook.presto.spi.Connector;
+import com.facebook.presto.spi.ConnectorHandleResolver;
+import com.facebook.presto.spi.ConnectorMetadata;
+import com.facebook.presto.spi.ConnectorRecordSetProvider;
+import com.facebook.presto.spi.ConnectorSplitManager;
 
 public class HazelcastConnector implements Connector {
 
@@ -35,16 +40,6 @@ public class HazelcastConnector implements Connector {
 	@Override
 	public ConnectorRecordSetProvider getRecordSetProvider() {
 		return new HazelcastRecordSetProvider(connectorId, hz);
-	}
-
-	@Override
-	public ConnectorRecordSinkProvider getRecordSinkProvider() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public ConnectorIndexResolver getIndexResolver() {
-		throw new UnsupportedOperationException();
 	}
 
 }

@@ -1,7 +1,7 @@
 package plugin;
 
-import static com.facebook.presto.util.Types.checkType;
-import static plugin.HazelcastConnectorUtil.getColumns;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -9,11 +9,18 @@ import java.util.List;
 import java.util.Map;
 
 import jersey.repackaged.com.google.common.collect.Iterables;
+import static com.facebook.presto.util.Types.checkType;
+import static plugin.HazelcastConnectorUtil.getColumns;
 
-import com.facebook.presto.spi.*;
+import com.facebook.presto.spi.ColumnHandle;
+import com.facebook.presto.spi.ColumnMetadata;
+import com.facebook.presto.spi.ConnectorSession;
+import com.facebook.presto.spi.ConnectorTableHandle;
+import com.facebook.presto.spi.ConnectorTableMetadata;
+import com.facebook.presto.spi.ReadOnlyConnectorMetadata;
+import com.facebook.presto.spi.SchemaTableName;
+import com.facebook.presto.spi.SchemaTablePrefix;
 import com.google.common.collect.ImmutableList;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
 
 public class HazelcastConnectorMetadata extends ReadOnlyConnectorMetadata {
 
@@ -59,21 +66,17 @@ public class HazelcastConnectorMetadata extends ReadOnlyConnectorMetadata {
 		return tables;
 	}
 
-	@Override
-	public ConnectorColumnHandle getSampleWeightColumnHandle(ConnectorTableHandle tableHandle) {
-		return null;
-	}
 
 	@Override
-	public Map<String, ConnectorColumnHandle> getColumnHandles(ConnectorTableHandle tableHandle) {
+	public Map<String, ColumnHandle> getColumnHandles(ConnectorTableHandle tableHandle) {
 
 		HazelcastTableHandle table = checkType(tableHandle, HazelcastTableHandle.class, "tableHandle");
 		List<ColumnMetadata> cols = HazelcastConnectorUtil.getColumns(table.getTable(), hz);
 
-		Map<String, ConnectorColumnHandle> colHandles = new LinkedHashMap<>();
+		Map<String, ColumnHandle> colHandles = new LinkedHashMap<>();
 		HazelcastColumnHandle col;
 		for(ColumnMetadata md: cols) {
-			col = new HazelcastColumnHandle(connectorId, md.getName(), md.getType(), md.getOrdinalPosition());
+			col = new HazelcastColumnHandle(connectorId, md.getName(), md.getType(), md.isPartitionKey(), md.isHidden());
 			colHandles.put(md.getName(), col);
 		}
 
@@ -82,7 +85,7 @@ public class HazelcastConnectorMetadata extends ReadOnlyConnectorMetadata {
 
 	@Override
 	public ColumnMetadata getColumnMetadata(ConnectorTableHandle tableHandle,
-			ConnectorColumnHandle columnHandle) {
+			ColumnHandle columnHandle) {
 		return checkType(columnHandle, HazelcastColumnHandle.class, "tableHandle").getMetadata();
 	}
 
@@ -98,5 +101,10 @@ public class HazelcastConnectorMetadata extends ReadOnlyConnectorMetadata {
 
 		return columns;
 	}
+
+    @Override
+    public ColumnHandle getSampleWeightColumnHandle(ConnectorTableHandle tableHandle) {
+        return null;
+    }
 
 }

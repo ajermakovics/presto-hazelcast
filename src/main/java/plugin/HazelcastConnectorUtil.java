@@ -1,7 +1,10 @@
 package plugin;
 
-import static com.google.common.collect.Iterables.getFirst;
-import static jersey.repackaged.com.google.common.base.Preconditions.checkNotNull;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
+import com.hazelcast.query.PagingPredicate;
+import com.hazelcast.query.impl.AttributeType;
+import com.hazelcast.query.impl.ReflectionHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,7 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import static com.google.common.collect.Iterables.getFirst;
+import static jersey.repackaged.com.google.common.base.Preconditions.checkNotNull;
 
 import com.facebook.presto.spi.ColumnMetadata;
 import com.facebook.presto.spi.SchemaTableName;
@@ -20,11 +24,8 @@ import com.facebook.presto.spi.type.Type;
 import com.facebook.presto.spi.type.VarcharType;
 import com.facebook.presto.type.UnknownType;
 import com.google.common.collect.ImmutableList;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.hazelcast.query.PagingPredicate;
-import com.hazelcast.query.impl.AttributeType;
-import com.hazelcast.query.impl.ReflectionHelper;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 public class HazelcastConnectorUtil {
 
@@ -77,7 +78,7 @@ public class HazelcastConnectorUtil {
 		Class<? extends Object> clazz = e.getValue().getClass();
 		AttributeType attr = ReflectionHelper.getAttributeType(clazz);
 		Type type = toType(attr);
-		return new ColumnMetadata(e.getKey(), type , pos, false);
+		return new ColumnMetadata(e.getKey(), type, false);
 	}
 
 	static Type toType(AttributeType attr) {
